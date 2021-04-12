@@ -7,7 +7,8 @@ import { actions } from './store'
 
 const mapState = (state: any) => ({
   bannerList: state.getIn(['recommend', 'bannerList']),
-  recommendList: state.getIn(['recommend', 'recommendList'])
+  recommendList: state.getIn(['recommend', 'recommendList']),
+  enterLoading: state.getIn(['recommend','enterLoading'])
 })
 
 const mapDispatch = (dispatch: Dispatch | ThunkDispatchTy) => ({

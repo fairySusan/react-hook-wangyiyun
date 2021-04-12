@@ -15,6 +15,11 @@ export const setRecommendList = (data: RecommendItemI[]) => ({
   data: fromJS (data)
 });
 
+export const setEnterLoading = (data: boolean) => ({
+  type: actionTypes.CHANGE_ENTER_LOADING,
+  data
+})
+
 export const getBannerList = () => {
   return (dispatch: Dispatch) => {
     getBannerRequest().then((res: AxiosResponse<BannerI>) => {
@@ -29,6 +34,7 @@ export const getRecommendList = () => {
   return (dispatch: Dispatch) => {
     getRecommendListRequest().then ((res: BaseResponse<RecommendRes>) => {
       dispatch(setRecommendList(res.data.result));
+      dispatch(setEnterLoading(false))
     }).catch(() => {
       console.log ("推荐歌单数据传输错误");
     });

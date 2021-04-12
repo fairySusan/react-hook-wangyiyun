@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import Slider from 'src/components/Slider'
 import RecommendList from 'src/components/RecommendList'
 import Scroll from 'src/baseUI/scroll'
+import Loading from 'src/baseUI/loading'
 import { forceCheck } from 'react-lazyload';
 import {Content} from './style'
 import {PropsFromRedux, connector} from './type'
@@ -11,7 +12,7 @@ interface Props extends PropsFromRedux {
 }
 
 function Recommend (props:Props) {
-  const {bannerList, recommendList} = props
+  const {bannerList, recommendList, enterLoading} = props
   const {getBanner, getRecommend} = props
 
   useEffect(() => {
@@ -34,6 +35,9 @@ function Recommend (props:Props) {
           <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
+      {
+        enterLoading ? <Loading></Loading> : false
+      }
     </Content>
   )
 }

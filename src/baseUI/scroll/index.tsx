@@ -35,8 +35,8 @@ const Scroll: React.FC<Props> = forwardRef((props: Props, ref) => {
     direction = 'vertical',
     click = true,
     refresh = true,
-    isRefreshing = true,
-    isLoadingMore = true,
+    isRefreshing = false,
+    isLoadingMore = false,
     bounceTop = true,
     bounceBottom = true
   } = props;
