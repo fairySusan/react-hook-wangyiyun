@@ -19,7 +19,7 @@ function Horizen (props: Props) {
   // 加入初始化内容宽度的逻辑
   useEffect (() => {
     let categoryDOM = Category.current;
-    let tagElems = (categoryDOM as HTMLDivElement).querySelectorAll ("span");
+    let tagElems = (categoryDOM as HTMLDivElement).querySelectorAll("span");
     let totalWidth = 0;
     Array.from (tagElems).forEach (ele => {
       totalWidth += ele.offsetWidth;
@@ -28,7 +28,7 @@ function Horizen (props: Props) {
   }, []);
 
   return (
-    <Scroll direction="vertical">
+    <Scroll direction="horizental">
       <div ref={Category}>
         <List>
           <span>{title}</span>
