@@ -1,5 +1,4 @@
 import {
-  getHotSingerListRequest,
   getSingerListRequest
 } from "../../../api/request";
 import {

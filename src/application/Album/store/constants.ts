@@ -1,0 +1,1 @@
+export const Get_Album_Detail = 'Get_Album_Detail'
