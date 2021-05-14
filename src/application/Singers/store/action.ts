@@ -43,60 +43,17 @@ export const changePullDownLoading = (data: any) => ({
   data
 });
 
-//第一次加载热门歌手
-export const getHotSingerList = () => {
+//加载歌手列表
+export const getSingerList = (count: number, category?: any, alpha?: string) => {
   return (dispatch: Dispatch) => {
-    getHotSingerListRequest(0).then((res: any) => {
-      const data = res.artists;
+    getSingerListRequest(count,category, alpha).then((res: any) => {
+      const data = res.data.artists;
       dispatch(changeSingerList(data));
       dispatch(changeEnterLoading(false));
+      dispatch(changePullUpLoading(false));
       dispatch(changePullDownLoading(false));
     }).catch(() => {
-      console.log('热门歌手数据获取失败');
+      console.log('歌手数据获取失败');
     })
-  }
-};
-
-//加载更多热门歌手
-export const refreshMoreHotSingerList = () => {
-  return (dispatch: Dispatch, getState: any) => {
-    const pageCount = getState().getIn(['singers', 'pageCount']);
-    const singerList = getState().getIn(['singers', 'singerList']).toJS();
-    getHotSingerListRequest(pageCount).then((res: any) => {
-      const data = [...singerList, ...res.artists];
-      dispatch(changeSingerList(data));
-      dispatch(changePullUpLoading(false));
-    }).catch(() => {
-      console.log('热门歌手数据获取失败');
-    });
-  }
-};
-
-//第一次加载对应类别的歌手
-export const getSingerList = (category: any, alpha: any) => {
-  return (dispatch: Dispatch) => {
-    getSingerListRequest(category, alpha, 0).then((res: any) => {
-      const data = res.artists;
-      dispatch(changeSingerList(data));
-      dispatch(changeEnterLoading(false));
-      dispatch(changePullDownLoading(false));
-    }).catch(() => {
-      console.log('歌手数据获取失败');
-    });
-  }
-};
-
-//加载更多歌手
-export const refreshMoreSingerList = (category: any, alpha: any) => {
-  return (dispatch: Dispatch, getState: any) => {
-    const pageCount = getState().getIn(['singers', 'pageCount']);
-    const singerList = getState().getIn(['singers', 'singerList']).toJS();
-    getSingerListRequest(category, alpha, pageCount).then((res: any) => {
-      const data = [...singerList, ...res.artists];
-      dispatch(changeSingerList(data));
-      dispatch(changePullUpLoading(false));
-    }).catch(() => {
-      console.log('歌手数据获取失败');
-    });
   }
 };

@@ -1,7 +1,5 @@
-import { act } from '@testing-library/react'
 import { connect, ConnectedProps } from 'react-redux'
-import { Dispatch, Action} from 'redux'
-import { ThunkDispatch } from 'redux-thunk'
+import { Dispatch} from 'redux'
 import { AppState, ThunkDispatchTy } from 'src/store'
 import { actions } from './store'
 
