@@ -5,9 +5,12 @@ import Scroll from 'src/baseUI/scroll'
 import Loading from 'src/baseUI/loading'
 import { forceCheck } from 'react-lazyload';
 import {Content} from './style'
+import { renderRoutes, RouteConfig } from 'react-router-config';
 import {PropsFromRedux, connector} from './type'
 
-interface Props extends PropsFromRedux {
+type parentProp = PropsFromRedux & RouteConfig
+
+interface Props extends parentProp {
 
 }
 
@@ -38,6 +41,7 @@ function Recommend (props:Props) {
       {
         enterLoading ? <Loading></Loading> : false
       }
+      { renderRoutes (props.route.routes) }
     </Content>
   )
 }

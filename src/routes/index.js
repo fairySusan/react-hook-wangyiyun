@@ -4,6 +4,7 @@ import Home from 'src/application/Home';
 import Recommend from 'src/application/Recommend';
 import Singers from 'src/application/Singers';
 import Rank from 'src/application/Rank';
+import Album from 'src/application/Album';
 
 const routers =  [
   {
@@ -17,7 +18,13 @@ const routers =  [
       },
       {
         path: '/recommend',
-        component: Recommend
+        component: Recommend,
+        routes: [
+          {
+            path: "/recommend/:id",
+            component: Album
+          }
+        ]
       },
       {
         path: '/singers',

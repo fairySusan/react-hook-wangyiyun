@@ -1,6 +1,6 @@
 import { connect, ConnectedProps } from 'react-redux'
-import { Dispatch, Action} from 'redux'
-import { AppState, ThunkDispatchTy } from 'src/store'
+import { Dispatch} from 'redux'
+import { ThunkDispatchTy } from 'src/store'
 import { actions } from './store'
 
 const mapState = (state: any) => ({

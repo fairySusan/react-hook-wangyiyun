@@ -10,6 +10,7 @@ import {
   List
 } from './style';
 
+
 interface Props extends RouteComponentProps{
   recommendList: RecommendItemI[]
 }
@@ -48,4 +49,4 @@ function RecommendList (props: Props) {
   )
 }
 
-export default withRouter(React.memo(RecommendList))
+export default React.memo(withRouter(RecommendList))
