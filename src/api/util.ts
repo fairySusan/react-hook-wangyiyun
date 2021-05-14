@@ -30,3 +30,12 @@ export const filterIndex = (rankList: any[]) => {
     }
   }
 };
+
+export const getName = (list: any[]) => {
+  let str = "";
+  list.map ((item, index) => {
+    str += index === 0 ? item.name : "/" + item.name;
+    return item;
+  });
+  return str;
+};
