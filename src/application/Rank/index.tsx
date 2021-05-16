@@ -4,7 +4,10 @@ import {filterIndex} from 'src/api/util'
 import Scroll from 'src/baseUI/scroll'
 import {Container, List, ListItem, SongList} from './style'
 import Loading from 'src/baseUI/loading'
-interface Props extends PropsFromRedux{}
+import { RouteConfig, renderRoutes } from 'react-router-config'
+
+type MinxinProps = PropsFromRedux & RouteConfig
+interface Props extends MinxinProps{}
 
 function Rank (props: Props) {
   const {rankList, enterLoading} = props
@@ -16,12 +19,16 @@ function Rank (props: Props) {
     props.getRankList()
   }, []);
 
+  const enterDetail = (detail: any) => {
+    props.history.push (`/rank/${detail.id}`)
+  }
+
   const renderRankList = (list: any[], global?: boolean) => (
     <List globalRank={global}>
       {
       list.map ((item) => {
         return (
-          <ListItem key={item.coverImgId} tracks={item.tracks}>
+          <ListItem key={item.coverImgId} tracks={item.tracks} onClick={() => enterDetail (item)}>
             <div className="img_wrapper">
               <img src={item.coverImgUrl} alt=""/>
               <div className="decorate"></div>
@@ -47,17 +54,20 @@ function Rank (props: Props) {
     ) : null;
   }
 
-  return  <Container>
-    <Scroll>
-      <div>
-        <h1 className="offical"> 官方榜 </h1>
-          { renderRankList (officialList) }
-        <h1 className="global"> 全球榜 </h1>
-          { renderRankList (globalList, true) }
-        { enterLoading ?<Loading></Loading> : null }
-      </div>
-    </Scroll> 
-</Container>
+  return (
+    <Container>
+      <Scroll>
+        <div>
+          <h1 className="offical"> 官方榜 </h1>
+            { renderRankList (officialList) }
+          <h1 className="global"> 全球榜 </h1>
+            { renderRankList (globalList, true) }
+          { enterLoading ?<Loading></Loading> : null }
+        </div>
+      </Scroll> 
+      { renderRoutes (props.route.routes) }
+  </Container>
+  )
 }
 
 export default connector(React.memo(Rank))

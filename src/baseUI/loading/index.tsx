@@ -13,6 +13,7 @@ const loading = keyframes`
 const LoadingWrapper = styled.div`
     >div {
       position: absolute;
+      z-index: 9999;
       top: 0; left: 0; right: 0; bottom: 0;
       margin: auto;
       width: 60px;

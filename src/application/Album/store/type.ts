@@ -4,4 +4,9 @@ export interface GetDetailAction {
     data: any
 }
 
-export type AlbumAction = GetDetailAction
+export interface SetEnterLoadingAction {
+    type: typeof actionTypes.Set_Enter_Loading,
+    data: boolean
+}
+
+export type AlbumAction = GetDetailAction | SetEnterLoadingAction

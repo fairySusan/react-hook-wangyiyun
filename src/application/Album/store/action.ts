@@ -9,10 +9,16 @@ export const setDetail = (data: any) => ({
     data
 })
 
+export const setEnterLoading = (data: boolean) => ({
+    type: actionTypes.Set_Enter_Loading,
+    data
+})
+
 export const getAlbumDetail = (id: number) => {
     return (dispatch: Dispatch) => {
         getAlbumDetailRequest(id).then((res: AxiosResponse) => {
-            dispatch(setDetail(res.data))
+            dispatch(setDetail(res.data));
+            dispatch(setEnterLoading(false))
         })
     }
 }

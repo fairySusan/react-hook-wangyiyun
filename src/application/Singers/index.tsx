@@ -16,7 +16,9 @@ function Singers (props: Props) {
   let pageCount = 1
 
   useEffect(() => {
-    props.getSingerListFull()
+    if (!singerList.size) {
+      props.getSingerListFull()
+    }
   }, []);
 
   let handleUpdateAlpha = (val: string) => {
