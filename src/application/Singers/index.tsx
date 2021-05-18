@@ -5,8 +5,11 @@ import Loading from 'src/baseUI/loading'
 import { categoryTypes, alphaTypes } from 'src/api/config'
 import { NavContainer, ListContainer, List, ListItem } from "./style";
 import { connector, PropsFromRedux } from './type'
+import { RouteConfig, renderRoutes } from 'react-router-config'
 
-interface Props extends PropsFromRedux {}
+type MixinProps = RouteConfig & PropsFromRedux
+
+interface Props extends MixinProps {}
 
 
 function Singers (props: Props) {
@@ -42,6 +45,10 @@ function Singers (props: Props) {
     props.getSingerListPullDown(category, alpha)
   }
 
+  const enterDetail = (id: number)  => {
+    props.history.push (`/singers/${id}`);
+  };
+
 
   const renderSingerList = () => {
     const singerListJS = singerList ? singerList.toJS() : [];
@@ -49,7 +56,7 @@ function Singers (props: Props) {
       <List>
         {
           singerListJS.map((item: any, index: number) => (
-            <ListItem key={item.accountId+""+index}>
+            <ListItem key={item.accountId+""+index} onClick={() => enterDetail (item.id)}>
               <div className="img_wrapper">
                 <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
               </div>
@@ -90,6 +97,7 @@ function Singers (props: Props) {
           enterLoading ? <Loading></Loading> : false
         }
       </ListContainer>
+      { renderRoutes (props.route.routes) }
     </div>
   )
 }

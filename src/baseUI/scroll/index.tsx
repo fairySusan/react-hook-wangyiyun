@@ -28,7 +28,7 @@ interface Props {
   onScroll?: any // 滑动时调用的函数
 }
 
-const Scroll: React.FC<Props> = forwardRef((props: Props, ref) => {
+const Scroll = forwardRef((props: Props, ref: any) => {
   const [bScroll, setBScroll] = useState<BScrollFactory | null>();
   const scrollContaninerRef = useRef<HTMLDivElement>();
   const {

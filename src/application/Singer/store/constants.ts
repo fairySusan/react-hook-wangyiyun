@@ -1,0 +1,1 @@
+export const Set_Singer_Detail = 'singer/Set_Singer_Detail'
