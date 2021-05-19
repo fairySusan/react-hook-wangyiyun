@@ -10,8 +10,8 @@ export const Container = styled.div`
     margin: 10px 5px;
     padding-top: 15px;
     font-weight: 700;
-    font-size: ${style ["font-size-m"]};
-    color: ${style ["font-color-desc"]};
+    font-size: ${style["font-size-m"]};
+    color: ${style["font-color-desc"]};
   }
 `;
 export const List = styled.ul`
@@ -21,7 +21,7 @@ export const List = styled.ul`
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  background: ${style ["background-color"]};
+  background: ${style["background-color"]};
   &::after {
     content:"";
     display:block;
@@ -43,7 +43,7 @@ export const ListItem = styled.li`
       width: 100%;
       height: 35px;
       border-radius: 3px;
-      background: linear-gradient (hsla (0,0%,100%,0),hsla (0,0%,43%,.4));
+      background: linear-gradient (hsla(0,0%,100%,0),hsla(0,0%,43%,.4));
     }
     img {
       width: 100%;
@@ -54,8 +54,8 @@ export const ListItem = styled.li`
       position: absolute;
       left: 7px;
       bottom: 7px;
-      font-size: ${style ["font-size-ss"]};
-      color: ${style ["font-color-light"]};
+      font-size: ${style["font-size-ss"]};
+      color: ${style["font-color-light"]};
     }
   }
 `;
@@ -66,7 +66,7 @@ export const SongList = styled.ul`
   justify-content: space-around;
   padding: 10px 10px;
   >li {
-    font-size: ${style ["font-size-s"]};
+    font-size: ${style["font-size-s"]};
     color: grey;
   }
 `;

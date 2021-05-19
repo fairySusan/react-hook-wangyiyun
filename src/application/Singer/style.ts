@@ -38,7 +38,7 @@ export const ImgWrapper = styled.div`
   height: 0;
   padding-top: 75%;
   transform-origin: top;
-  background: url (${(props: {bgUrl: string}) => props.bgUrl});
+  background: url(${(props: {bgUrl: string}) => props.bgUrl});
   background-size: cover;
   z-index: 50;
   .filter {
@@ -47,7 +47,7 @@ export const ImgWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba (7, 17, 27, 0.3);
+    background: rgba(7, 17, 27, 0.3);
   }
 `
 

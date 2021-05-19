@@ -33,7 +33,7 @@ function Album (props: Props) {
 
    const handleScroll = useCallback((pos: any) => {
       let minScrollY = -HEADER_HEIGHT;
-      let percent = Math.abs (pos.y/minScrollY);
+      let percent = Math.abs(pos.y/minScrollY);
       let headerDom: any = headerEl.current;
       // 滑过顶部的高度开始变化
       if (pos.y < minScrollY) {
@@ -45,8 +45,8 @@ function Album (props: Props) {
       } else {
         headerDom.style.backgroundColor = "";
         headerDom.style.opacity = 1;
-        setTitle ("歌单");
-        setIsMarquee (false);
+        setTitle("歌单");
+        setIsMarquee(false);
       }
     }, [playlist]);
 

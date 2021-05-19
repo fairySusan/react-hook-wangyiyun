@@ -16,16 +16,15 @@ export const List = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
-  &:after {
-    content: "";
-    flex: auto;
-  }
 ` 
 
 export const ListItem = styled.div`
   position: relative;
-  width: 32%;
+  width: 30%;
+  margin: 0 2.5%;
+  &:nth-child(3n-1) {
+    margin:0;
+  }
   .decorate {
     z-index: 1;
     position: absolute;

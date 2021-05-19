@@ -21,8 +21,8 @@ const SongsList = React.forwardRef((props: Props, refs: any) => {
     let songList = (list: any[]) => {
         let res = [];
         for (let i = 0; i < list.length; i++) {
-            let item = list [i];
-            res.push (
+            let item = list[i];
+            res.push(
             <li key={item.id} onClick={(e) => selectItem (e, i)}>
                 <span className="index">{i + 1}</span>
                 <div className="info">
@@ -56,7 +56,7 @@ const SongsList = React.forwardRef((props: Props, refs: any) => {
             { showCollect ? collect(collectCount) : null}
             </div>
             <SongItem>
-            { songList (songs) }
+            { songList(songs) }
             </SongItem>
         </SongList>
     )
