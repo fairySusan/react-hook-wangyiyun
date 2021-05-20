@@ -5,4 +5,9 @@ interface PlayAction {
     data: boolean
 }
 
-export type PlayerAction = PlayAction
+interface FullScreenAction {
+    type: typeof actionTypes.FullScreen,
+    data: boolean
+}
+
+export type PlayerAction = PlayAction | FullScreenAction

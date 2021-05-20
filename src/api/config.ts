@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const baseUrl = 'http://localhost:3000';
+export const baseUrl = 'http://10.123.55.63:3000';
 
 //axios 的实例及拦截器配置
 const axiosInstance = axios.create ({

@@ -1,7 +1,7 @@
 import reducer from './reducer'
-import * as action from './action'
+import * as actions from './action'
 
 export {
     reducer,
-    action
+    actions
 }
