@@ -2,17 +2,33 @@ import React, {useRef} from 'react';
 import {getName} from 'src/api/util';
 import { MiniPlayerContainer } from './style';
 import { CSSTransition } from 'react-transition-group';
+import ProgressCircle from 'src/baseUI/progress-circle'
 
 
 interface Props {
     song: any,
+    playing: boolean,
     fullScreen: boolean,
-    setFullScreen: (data: boolean) => void
+    setFullScreen: (data: boolean) => void,
+    setPlaying: (data: boolean) => void,
+    percent: number
 }
 
 function MiniPlayer (props: Props) {
-    const { song, fullScreen, setFullScreen } = props;
+    const {
+        song,
+        fullScreen,
+        playing,
+        percent,
+        setFullScreen,
+        setPlaying
+    } = props;
     const miniPlayerRef: any = useRef();
+
+
+    const clickPlaying = (e: any, isPlay: boolean) => {
+        setPlaying(isPlay)
+    }
 
     return (
         <CSSTransition 
@@ -29,7 +45,7 @@ function MiniPlayer (props: Props) {
             <MiniPlayerContainer ref={miniPlayerRef} onClick={() => setFullScreen(true)}>
                 <div className="icon">
                     <div className="imgWrapper">
-                    <img className="play" src={song.al.picUrl} width="40" height="40" alt="img"/>
+                     <img className={`play ${playing ? "": "pause"}`} src={song.al.picUrl} width="40" height="40" alt="img"/>
                     </div>
                 </div>
                 <div className="text">
@@ -37,7 +53,13 @@ function MiniPlayer (props: Props) {
                     <p className="desc">{getName(song.ar)}</p>
                 </div>
                 <div className="control">
-                    <i className="iconfont">&#xe650;</i>
+                    <ProgressCircle radius={32} percent={percent}>
+                        { playing ? 
+                            <i className="icon-mini iconfont icon-pause" onClick={e => clickPlaying(e, false)}>&#xe650;</i>
+                            :
+                            <i className="icon-mini iconfont icon-play" onClick={e => clickPlaying(e, true)}>&#xe61e;</i> 
+                        }
+                    </ProgressCircle>
                 </div>
                 <div className="control">
                     <i className="iconfont">&#xe640;</i>

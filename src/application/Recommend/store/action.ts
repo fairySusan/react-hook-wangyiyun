@@ -7,12 +7,12 @@ import { AxiosResponse } from 'axios'
 
 export const setBannerList = (data: {imageUrl: string}[]) => ({
   type: actionTypes.CHANGE_BANNER,
-  data: fromJS (data)
+  data: fromJS(data)
 });
 
 export const setRecommendList = (data: RecommendItemI[]) => ({
   type: actionTypes.CHANGE_RECOMMEND_LIST,
-  data: fromJS (data)
+  data: fromJS(data)
 });
 
 export const setEnterLoading = (data: boolean) => ({

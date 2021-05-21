@@ -23,15 +23,15 @@ const SongsList = React.forwardRef((props: Props, refs: any) => {
         for (let i = 0; i < list.length; i++) {
             let item = list[i];
             res.push(
-            <li key={i} onClick={(e) => selectItem (e, i)}>
-                <span className="index">{i + 1}</span>
-                <div className="info">
-                <span>{item.name}</span>
-                <span>
-                    { item.ar ? getName (item.ar): getName (item.artists) } - { item.al ? item.al.name : item.album.name}
-                </span>
-                </div>
-            </li>
+                <li key={i} onClick={(e) => selectItem(e, i)}>
+                    <span className="index">{i + 1}</span>
+                    <div className="info">
+                    <span>{item.name}</span>
+                    <span>
+                        { item.ar ? getName (item.ar): getName (item.artists) } - { item.al ? item.al.name : item.album.name}
+                    </span>
+                    </div>
+                </li>
             )
         }
         return res;

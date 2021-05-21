@@ -1,7 +1,8 @@
-import React, {useRef} from "react";
-import {  getName, prefixStyle } from "src/api/util";
+import React, {useRef, useState} from "react";
+import {  getName, prefixStyle, formatPlayTime } from "src/api/util";
 import { CSSTransition } from 'react-transition-group';
 import animations from "create-keyframe-animation";
+import ProgressBar from 'src/baseUI/progressBar'
 
 import {
   NormalPlayerContainer,
@@ -10,20 +11,38 @@ import {
   Bottom,
   Operators,
   CDWrapper,
+  ProgressWrapper
 } from "./style";
 
 interface Props {
     song: any,
     fullScreen: boolean,
-    setFullScreen: (data: boolean) => void
+    playing: boolean,
+    setFullScreen: (data: boolean) => void,
+    setPlaying: (data: boolean) => void,
+    onProgressChange: (curPercent: number) => void,
+    duration: number,
+    currentTime: number,
+    percent: number
 }
 
 function NormalPlayer (props: Props) {
-    const {song, fullScreen, setFullScreen} =  props;
+    const {
+        song,
+        fullScreen,
+        playing,
+        currentTime,
+        percent,
+        duration,
+        setFullScreen,
+        setPlaying,
+        onProgressChange
+    } =  props;
     const normalPlayerRef: any = useRef();
     const cdWrapperRef: any = useRef();
 
     const transform = prefixStyle ("transform");
+
     // 启用帧动画
     const enter = () => {
         normalPlayerRef.current.style.display = "block";
@@ -92,7 +111,12 @@ function NormalPlayer (props: Props) {
         // 一定要注意现在要把 normalPlayer 这个 DOM 给隐藏掉，因为 CSSTransition 的工作只是把动画执行一遍 
         // 不置为 none 现在全屏播放器页面还是存在
         normalPlayerRef.current.style.display = "none";
-      };
+      }
+
+    const clickPlaying = (e: any, isPlay: boolean) => {
+        console.log(isPlay)
+        setPlaying(isPlay)
+    }
 
     return (
         <CSSTransition
@@ -108,6 +132,7 @@ function NormalPlayer (props: Props) {
         <NormalPlayerContainer  ref={normalPlayerRef}>
             <div className="background">
             <img
+                className={`play ${playing ? "": "pause"}`}
                 src={song.al.picUrl + "?param=300x300"}
                 width="100%"
                 height="100%"
@@ -120,13 +145,13 @@ function NormalPlayer (props: Props) {
                 <i className="iconfont icon-back">&#xe662;</i>
             </div>
             <h1 className="title">{song.name}</h1>
-            <h1 className="subtitle">{getName (song.ar)}</h1>
+            <h1 className="subtitle">{getName(song.ar)}</h1>
             </Top>
             <Middle ref={cdWrapperRef}>
                 <CDWrapper>
                     <div className="cd">
                     <img
-                        className="image play"
+                        className={`image ${playing ? "play": "pause"}`}
                         src={song.al.picUrl + "?param=400x400"}
                         alt=""
                     />
@@ -134,23 +159,34 @@ function NormalPlayer (props: Props) {
                 </CDWrapper>
             </Middle>
             <Bottom className="bottom">
-            <Operators>
-                <div className="icon i-left" >
-                <i className="iconfont">&#xe625;</i>
-                </div>
-                <div className="icon i-left">
-                <i className="iconfont">&#xe6e1;</i>
-                </div>
-                <div className="icon i-center">
-                <i className="iconfont">&#xe723;</i>
-                </div>
-                <div className="icon i-right">
-                <i className="iconfont">&#xe718;</i>
-                </div>
-                <div className="icon i-right">
-                <i className="iconfont">&#xe640;</i>
-                </div>
-            </Operators>
+                <Operators>
+                    <div className="icon i-left" >
+                        <i className="iconfont">&#xe625;</i>
+                    </div>
+                    <div className="icon i-left">
+                        <i className="iconfont">&#xe6e1;</i>
+                    </div>
+                    <div className="icon i-center">
+                        { playing ? 
+                            <i className="iconfont icon-pause" onClick={e => clickPlaying(e, false)}>&#xe650;</i>
+                            :
+                            <i className="iconfont icon-play" onClick={e => clickPlaying(e, true)}>&#xe61e;</i> 
+                        }
+                    </div>
+                    <div className="icon i-right">
+                     <i className="iconfont">&#xe718;</i>
+                    </div>
+                    <div className="icon i-right">
+                     <i className="iconfont">&#xe640;</i>
+                    </div>
+                </Operators>
+                <ProgressWrapper>
+                    <span className="time time-l">{formatPlayTime(currentTime)}</span>
+                    <div className="progress-bar-wrapper">
+                        <ProgressBar percentChange={(percent: number) => onProgressChange(percent)} percent={percent}></ProgressBar>
+                    </div>
+                    <div className="time time-r">{formatPlayTime(duration)}</div>
+                </ProgressWrapper>
             </Bottom>
         </NormalPlayerContainer>
         </CSSTransition>

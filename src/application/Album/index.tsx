@@ -9,6 +9,7 @@ import style from 'src/assets/global-style';
 import Loading from 'src/baseUI/loading'
 import { connector, PropsFromRedux } from './type'
 
+
 type MixinProps = PropsFromRedux & RouteConfig
 
 interface Props extends MixinProps{}
@@ -20,6 +21,8 @@ function Album (props: Props) {
   const [title, setTitle] = useState ("歌单");
   const [isMarquee, setIsMarquee] = useState (false);// 是否跑马灯
   const playlist = props.detail?.playlist
+
+  const {clickSong} = props
 
   const headerEl = useRef ();
 
@@ -126,7 +129,7 @@ function Album (props: Props) {
                         {
                            playlist.tracks.map((item: any, index: number) => {
                            return (
-                              <li key={index}>
+                              <li key={index} onClick={() => clickSong(item)}>
                                  <span className="index">{index + 1}</span>
                                  <div className="info">
                                  <span>{item.name}</span>

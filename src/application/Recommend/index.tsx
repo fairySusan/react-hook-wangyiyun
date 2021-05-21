@@ -41,7 +41,7 @@ function Recommend (props:Props) {
       {
         enterLoading ? <Loading></Loading> : false
       }
-      { renderRoutes (props.route.routes) }
+      { renderRoutes(props.route.routes) }
     </Content>
   )
 }

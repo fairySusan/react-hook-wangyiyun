@@ -3,7 +3,7 @@ import thunk, {ThunkDispatch} from 'redux-thunk'
 import { rootReducer } from './reducer'
 const composeEnhancers = compose;
 
-const store = createStore (rootReducer, composeEnhancers (
+const store = createStore(rootReducer, composeEnhancers (
   applyMiddleware (thunk)
 ));
 
