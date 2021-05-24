@@ -31,24 +31,18 @@ export const setShowPlayList = (data: boolean) => ({
 
 export const setCurrentSong = (data: any) => ({
     type: actionTypes.Set_Current_Song,
-    data
+    data: fromJS(data)
 })
 
 
-export const setPlayList = (data: any) => {
-    return (dispatch: Dispatch, getState: () => any) => {
-        const playList = getState().getIn(['player', 'playList'])
-        playList.shift(data)
-        dispatch({
-            type: actionTypes.Set_PlayList,
-            data: fromJS(playList)
-        })
-    }
-}
+export const setPlayList = (data: any[]) => ({
+    type: actionTypes.Set_PlayList,
+    data: fromJS(data)
+})
 
 export const setSequencePlayList = (data: any[]) => ({
     type: actionTypes.Set_SequencePlayList,
-    data
+    data: fromJS(data)
 })
 
 export const setMode = (data:number) => ({

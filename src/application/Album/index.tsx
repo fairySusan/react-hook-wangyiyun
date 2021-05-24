@@ -5,9 +5,11 @@ import { RouteConfig } from 'react-router-config'
 import  Header  from 'src/baseUI/header/index';
 import Scroll from 'src/baseUI/scroll/index';
 import { getName, getCount } from 'src/api/util';
+import SongsList from 'src/application/SongsList'
 import style from 'src/assets/global-style';
 import Loading from 'src/baseUI/loading'
 import { connector, PropsFromRedux } from './type'
+import MusicNote from "src/baseUI/music-note";
 
 
 type MixinProps = PropsFromRedux & RouteConfig
@@ -16,15 +18,21 @@ interface Props extends MixinProps{}
 
 export const HEADER_HEIGHT = 45;
 
+
 function Album (props: Props) {
   const [showStatus, setShowStatus] = useState (true);
   const [title, setTitle] = useState ("歌单");
   const [isMarquee, setIsMarquee] = useState (false);// 是否跑马灯
   const playlist = props.detail?.playlist
 
-  const {clickSong} = props
 
-  const headerEl = useRef ();
+  const headerEl = useRef();
+
+  const musicNoteRef: any = useRef ();
+
+   const musicAnimation = (x: number, y: number) => {
+      musicNoteRef.current.startAnimation ({ x, y });
+   };
 
    useEffect(() => {
       props.getAlbumDetail(props.match.params.id)
@@ -53,6 +61,68 @@ function Album (props: Props) {
       }
     }, [playlist]);
 
+    const renderTopDesc = () => {
+      return (
+        <TopDesc background={playlist.coverImgUrl}>
+          <div className="background">
+            <div className="filter"></div>
+          </div>
+          <div className="img_wrapper">
+            <div className="decorate"></div>
+            <img src={playlist.coverImgUrl} alt="" />
+            <div className="play_count">
+              <i className="iconfont play">&#xe885;</i>
+              <span className="count">{getCount (playlist.subscribedCount)}</span>
+            </div>
+          </div>
+          <div className="desc_wrapper">
+            <div className="title">{playlist.name}</div>
+            <div className="person">
+              <div className="avatar">
+                <img src={playlist.creator.avatarUrl} alt="" />
+              </div>
+              <div className="name">{playlist.creator.nickname}</div>
+            </div>
+          </div>
+        </TopDesc>
+      )
+    }
+
+    const renderSongList = () => {
+      return (
+        <SongsList
+         songs={playlist.tracks}
+         collectCount={playlist.subscribedCount}
+         showCollect={true}
+         showBackground={true}
+         musicAnimation={musicAnimation}
+        />
+      )
+    }
+
+    const renderMenu = () => {
+      return (
+        <Menu>
+          <div>
+            <i className="iconfont">&#xe6ad;</i>
+            评论
+          </div>
+          <div>
+            <i className="iconfont">&#xe86f;</i>
+            点赞
+          </div>
+          <div>
+            <i className="iconfont">&#xe62d;</i>
+            收藏
+          </div>
+          <div>
+            <i className="iconfont">&#xe606;</i>
+            更多
+          </div>
+        </Menu>
+      )
+    };
+
    return (
    <CSSTransition
       in={showStatus}  
@@ -63,9 +133,6 @@ function Album (props: Props) {
       onExited={props.history.goBack}
     >
       <Container>
-         {
-           props.enterLoading ? <Loading></Loading> : false
-         }
          <Header ref={headerEl} title={title} handleClick={handleBack} isMarquee={isMarquee}></Header>
          {
           playlist ?
@@ -74,80 +141,18 @@ function Album (props: Props) {
                onScroll={handleScroll}
             >
                <div>
-                  <TopDesc background={playlist.coverImgUrl}>
-                     <div className="background">
-                        <div className="filter"></div>
-                     </div>
-                     <div className="img_wrapper">
-                     <div className="decorate"></div>
-                     <img src={playlist.coverImgUrl} alt=""/>
-                     <div className="play_count">
-                        <i className="iconfont play">&#xe885;</i>
-                        <span className="count">{Math.floor (playlist.subscribedCount/1000)/10} 万 </span>
-                     </div>
-                     </div>
-                     <div className="desc_wrapper">
-                     <div className="title">{playlist.name}</div>
-                     <div className="person">
-                        <div className="avatar">
-                           <img src={playlist.creator.avatarUrl} alt=""/>
-                        </div>
-                        <div className="name">{playlist.creator.nickname}</div>
-                     </div>
-                     </div>
-                  </TopDesc>
-                  <Menu>
-                     <div>
-                     <i className="iconfont">&#xe6ad;</i>
-                     评论
-                     </div>
-                     <div>
-                     <i className="iconfont">&#xe86f;</i>
-                     点赞
-                     </div>
-                     <div>
-                     <i className="iconfont">&#xe62d;</i>
-                     收藏
-                     </div>
-                     <div>
-                     <i className="iconfont">&#xe606;</i>
-                     更多
-                     </div>
-                  </Menu>
-                  <SongList>
-                     <div className="first_line">
-                        <div className="play_all">
-                           <i className="iconfont">&#xe6e3;</i>
-                           <span > 播放全部 <span className="sum">(共 {playlist.tracks.length} 首)</span></span>
-                        </div>
-                        <div className="add_list">
-                           <i className="iconfont">&#xe62d;</i>
-                           <span > 收藏 ({getCount(playlist.subscribedCount)})</span>
-                        </div>
-                     </div>
-                     <SongItem>
-                        {
-                           playlist.tracks.map((item: any, index: number) => {
-                           return (
-                              <li key={index} onClick={() => clickSong(item)}>
-                                 <span className="index">{index + 1}</span>
-                                 <div className="info">
-                                 <span>{item.name}</span>
-                                 <span>
-                                 { getName(item.ar) } - { item.al.name }
-                                 </span>
-                                 </div>
-                              </li>
-                           )
-                           })
-                        }
-                     </SongItem>
-                  </SongList> 
+                  { renderTopDesc() }
+                  { renderMenu() }
+                  { renderSongList() }
                </div> 
             </Scroll>
             :
             null
          }
+         {
+           props.enterLoading ? <Loading></Loading> : false
+         }
+          <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
    </CSSTransition>
    )

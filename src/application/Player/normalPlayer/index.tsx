@@ -3,6 +3,7 @@ import {  getName, prefixStyle, formatPlayTime } from "src/api/util";
 import { CSSTransition } from 'react-transition-group';
 import animations from "create-keyframe-animation";
 import ProgressBar from 'src/baseUI/progressBar'
+import { playMode } from 'src/api/config';
 
 import {
   NormalPlayerContainer,
@@ -23,7 +24,11 @@ interface Props {
     onProgressChange: (curPercent: number) => void,
     duration: number,
     currentTime: number,
-    percent: number
+    percent: number,
+    handlePrev: () => void,
+    handleNext: () => void,
+    mode: number,
+    changeMode: () => void
 }
 
 function NormalPlayer (props: Props) {
@@ -34,9 +39,13 @@ function NormalPlayer (props: Props) {
         currentTime,
         percent,
         duration,
+        mode,
         setFullScreen,
         setPlaying,
-        onProgressChange
+        onProgressChange,
+        handlePrev,
+        handleNext,
+        changeMode
     } =  props;
     const normalPlayerRef: any = useRef();
     const cdWrapperRef: any = useRef();
@@ -114,9 +123,22 @@ function NormalPlayer (props: Props) {
       }
 
     const clickPlaying = (e: any, isPlay: boolean) => {
-        console.log(isPlay)
         setPlaying(isPlay)
     }
+
+    //getPlayMode方法
+    const getPlayMode = () => {
+        let content;
+        if (mode === playMode.sequence) {
+            content = "&#xe625;";
+        } else if (mode === playMode.loop) {
+            content = "&#xe653;";
+        } else {
+            content = "&#xe61b;";
+        }
+        return content;
+    };
+    
 
     return (
         <CSSTransition
@@ -160,10 +182,10 @@ function NormalPlayer (props: Props) {
             </Middle>
             <Bottom className="bottom">
                 <Operators>
-                    <div className="icon i-left" >
-                        <i className="iconfont">&#xe625;</i>
+                    <div className="icon i-left" onClick={changeMode}>
+                        <i className="iconfont" dangerouslySetInnerHTML={{ __html: getPlayMode() }}></i>
                     </div>
-                    <div className="icon i-left">
+                    <div className="icon i-left" onClick={handlePrev}>
                         <i className="iconfont">&#xe6e1;</i>
                     </div>
                     <div className="icon i-center">
@@ -173,7 +195,7 @@ function NormalPlayer (props: Props) {
                             <i className="iconfont icon-play" onClick={e => clickPlaying(e, true)}>&#xe61e;</i> 
                         }
                     </div>
-                    <div className="icon i-right">
+                    <div className="icon i-right" onClick={handleNext}>
                      <i className="iconfont">&#xe718;</i>
                     </div>
                     <div className="icon i-right">

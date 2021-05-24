@@ -9,7 +9,9 @@ const mapState = (state: any) => ({
   percent: state.getIn(['player', 'percent']),
   currentIndex: state.getIn(['player', 'currentIndex']),
   currentSong: state.getIn(['player', 'currentSong']),
-  playList: state.getIn(['player', 'playList'])
+  playList: state.getIn(['player', 'playList']),
+  sequencePlayList: state.getIn(['player', 'sequencePlayList']),
+  mode: state.getIn(['player', 'mode'])
 })
 
 const mapDispatch = (dispatch: Dispatch | ThunkDispatchTy) => ({
@@ -18,6 +20,8 @@ const mapDispatch = (dispatch: Dispatch | ThunkDispatchTy) => ({
   setPercent: (data: number) => {(dispatch as Dispatch)(actions.setPercent(data))},
   setCurrentIndex: (data: number) => {(dispatch as Dispatch)(actions.setCurrentIndex(data))},
   setCurrentSong: (data: any) => {(dispatch as Dispatch)(actions.setCurrentSong(data))},
+  setMode: (data: number) => {(dispatch as Dispatch)(actions.setMode(data))},
+  setPlayList: (data: any) => {(dispatch as ThunkDispatchTy)(actions.setPlayList(data))},
 })
 
 

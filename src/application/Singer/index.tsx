@@ -8,6 +8,7 @@ import SongsList from 'src/application/SongsList'
 import { HEADER_HEIGHT } from "src/api/config";
 import { connector, PropsFromRedux } from './type'
 import Loading from 'src/baseUI/loading'
+import MusicNote from "src/baseUI/music-note";
 
 
 
@@ -32,6 +33,12 @@ function Singer (props: Props) {
 
     // 往上偏移的尺寸，露出圆角
     const OFFSET = 5;
+
+    const musicNoteRef: any = useRef ();
+
+    const musicAnimation = (x: number, y: number) => {
+      musicNoteRef.current.startAnimation ({ x, y });
+    };
 
     useEffect(() => {
       props.getSingerDetail(props.match.params.id)
@@ -119,9 +126,11 @@ function Singer (props: Props) {
                   <SongsList
                     songs={detail ? detail.hotSongs : []}
                     showCollect={false}
+                    musicAnimation={musicAnimation}
                   ></SongsList>
                 </Scroll>
               </SongListWrapper>
+              <MusicNote ref={musicNoteRef}></MusicNote>
             </Container>
         </CSSTransition>
     )

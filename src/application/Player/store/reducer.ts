@@ -18,7 +18,6 @@ const defaultState = fromJS({
 export default (state = defaultState, action: PlayerAction) => {
     switch(action.type) {
         case actionTypes.Playing:
-            console.log('playing', action.data)
             return state.set('playing', action.data)
         case actionTypes.FullScreen:
             return state.set('fullScreen', action.data)
