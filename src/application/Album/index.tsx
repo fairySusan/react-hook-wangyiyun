@@ -28,7 +28,7 @@ function Album (props: Props) {
 
   const headerEl = useRef();
 
-  const musicNoteRef: any = useRef ();
+  const musicNoteRef: any = useRef();
 
    const musicAnimation = (x: number, y: number) => {
       musicNoteRef.current.startAnimation ({ x, y });
@@ -72,7 +72,7 @@ function Album (props: Props) {
             <img src={playlist.coverImgUrl} alt="" />
             <div className="play_count">
               <i className="iconfont play">&#xe885;</i>
-              <span className="count">{getCount (playlist.subscribedCount)}</span>
+              <span className="count">{getCount(playlist.subscribedCount)}</span>
             </div>
           </div>
           <div className="desc_wrapper">
@@ -137,20 +137,20 @@ function Album (props: Props) {
          {
           playlist ?
             <Scroll
-               bounceTop={false}
-               onScroll={handleScroll}
+              bounceTop={false}
+              onScroll={handleScroll}
             >
                <div>
-                  { renderTopDesc() }
-                  { renderMenu() }
-                  { renderSongList() }
+                { renderTopDesc() }
+                { renderMenu() }
+                { renderSongList() }
                </div> 
             </Scroll>
             :
             null
          }
          {
-           props.enterLoading ? <Loading></Loading> : false
+          props.enterLoading ? <Loading></Loading> : false
          }
           <MusicNote ref={musicNoteRef}></MusicNote>
       </Container>
